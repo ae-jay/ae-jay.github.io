@@ -138,7 +138,7 @@ section {
 }
 
 /* Add alternating background colors for visual rhythm */
-#research, #blog {
+#cv, #publications, #contact {
     background-color: var(--secondary-bg);
 }
 
@@ -362,4 +362,56 @@ footer p {
     .research-grid, .blog-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* --- Styles for new CV Section --- */
+
+.cv-download-btn {
+    display: inline-block;
+    background-color: var(--primary-green);
+    color: var(--light-bg);
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    font-size: 1rem;
+    margin: 1rem 0 3rem 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cv-download-btn:hover {
+    background-color: var(--primary-green-darker);
+    color: var(--light-bg);
+    transform: translateY(-3px);
+}
+
+.cv-download-btn i {
+    margin-right: 0.75rem;
+}
+
+.cv-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+    text-align: left;
+}
+
+.highlight-item h4 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--dark-text);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.highlight-item ul {
+    list-style-position: inside;
+    padding-left: 0.5rem;
+}
+
+.highlight-item li {
+    margin-bottom: 0.5rem;
 }
