@@ -31,15 +31,14 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     font-family: var(--font-body);
     line-height: 1.7;
     color: var(--dark-text);
     background-color: var(--light-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* 2. Typography & Utility Classes */
@@ -127,12 +126,17 @@ nav a {
     transition: color 0.3s ease, border-color 0.3s ease;
 }
 
-nav a:hover, nav a.active {
+/* Style for the active page link */
+nav a:hover, nav a.active-nav {
     color: var(--primary-green);
     border-bottom-color: var(--primary-green);
 }
 
 /* 4. Main Section Styles */
+main {
+    flex-grow: 1; /* Ensures footer sticks to the bottom */
+}
+
 section {
     padding: 5rem 0;
 }
@@ -148,7 +152,7 @@ section {
     align-items: center;
     justify-content: center;
     text-align: center;
-    min-height: calc(100vh - 82px); /* Full height minus header */
+    min-height: calc(100vh - 160px); /* Adjust to fill space between header/footer */
     padding: 2rem 0;
 }
 
@@ -279,6 +283,10 @@ section {
 }
 
 /* 9. Contact Section */
+#contact {
+    background-color: var(--secondary-bg);
+}
+
 #contact .container {
     text-align: center;
     max-width: 700px;
@@ -306,6 +314,7 @@ footer {
     color: #ccc;
     text-align: center;
     padding: 1.5rem 0;
+    margin-top: auto; /* Pushes footer to the bottom */
 }
 
 footer p {
