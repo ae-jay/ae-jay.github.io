@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 /* --- TABLE OF CONTENTS ---
 1. Root Variables & Global Resets
 2. Typography & Utility Classes
