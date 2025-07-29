@@ -10,6 +10,8 @@
 9. Contact Section
 10. Footer
 11. Responsive Design (Media Queries)
+12. Modal Styles
+13. CV Section Styles
 */
 
 /* 1. Root Variables & Global Resets */
@@ -214,9 +216,8 @@ section {
 }
 
 /* 8. Blog Section */
-/* 8. Blog Section */
 .blog-grid {
-    display: flex; /* Change from grid to flexbox */
+    display: flex; /* Change from grid to flexbox for horizontal scrolling */
     overflow-x: auto; /* Enable horizontal scrolling */
     gap: 2rem; /* Provides spacing between blog posts */
     padding-bottom: 1.5rem; /* Add some padding for scrollbar on desktop */
@@ -244,24 +245,16 @@ section {
 
 .blog-post {
     flex: 0 0 auto; /* Prevent items from shrinking, allow them to grow based on content */
-    width: 320px; /* Explicit width for each blog post (or min-width) */
-    /* Ensure existing styles like background, border-radius, box-shadow remain */
-    background: var(--light-bg); /* */
-    border-radius: 8px; /* */
-    box-shadow: var(--shadow); /* */
-    overflow: hidden; /* */
-    display: flex; /* */
-    flex-direction: column; /* */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* */
+    width: 320px; /* Explicit width for each blog post */
+    background: var(--light-bg);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     scroll-snap-align: start; /* Optional: align items to the start of the scroll container */
 }
-
-/* You can remove or modify the existing blog-grid media query if it interferes,
-   but these flexbox properties will generally override grid behavior.
-   If you had specific media queries for the blog-grid affecting column count,
-   you might need to review them if you want to maintain a grid on larger screens
-   and only scroll on smaller, for example. For a purely scrolling layout,
-   these changes are sufficient. */
 
 .blog-post:hover {
     transform: translateY(-5px);
@@ -380,6 +373,10 @@ footer p {
         min-height: auto;
         padding: 4rem 0;
     }
+
+    /* For horizontal scrolling blog, you might not need to change blog-grid display here
+       unless you want it to go back to grid on very small screens, which is unlikely.
+       The current flexbox setup handles responsiveness well. */
 }
 
 @media (max-width: 480px) {
@@ -391,14 +388,69 @@ footer p {
         font-size: 0.9rem;
         padding: 0.5rem;
     }
+    /* The blog-grid flexbox approach naturally handles smaller screens by scrolling */
+}
 
-    .research-grid, .blog-grid {
-        grid-template-columns: 1fr;
+/* 12. Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1001; /* Sit on top (higher than header) */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Padding around the modal content */
+}
+
+.modal-content {
+    background-color: var(--light-bg);
+    margin: auto; /* Center the modal vertically and horizontally */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 90%; /* Adjust as needed */
+    max-width: 700px; /* Max width for readability */
+    position: relative;
+    animation: fadeIn 0.3s ease-out; /* Optional fade-in animation */
+    max-height: 90vh; /* Limit height to viewport height */
+    overflow-y: auto; /* Enable scrolling for modal content */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--dark-text);
+    text-decoration: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 20px auto; /* Adjust margin for smaller screens */
     }
 }
 
-/* --- Styles for new CV Section --- */
-
+/* 13. Styles for new CV Section */
 .cv-download-btn {
     display: inline-block;
     background-color: var(--primary-green);
@@ -447,69 +499,4 @@ footer p {
 
 .highlight-item li {
     margin-bottom: 0.5rem;
-}
-
-/* Add to your style.css, e.g., after the Blog Section or at the end */
-
-/* Modal Background */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1001; /* Sit on top (higher than header) */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-    justify-content: center;
-    align-items: center;
-    padding: 20px; /* Padding around the modal content */
-}
-
-/* Modal Content */
-.modal-content {
-    background-color: var(--light-bg);
-    margin: auto; /* Center the modal vertically and horizontally */
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    width: 90%; /* Adjust as needed */
-    max-width: 700px; /* Max width for readability */
-    position: relative;
-    animation: fadeIn 0.3s ease-out; /* Optional fade-in animation */
-    max-height: 90vh; /* Limit height to viewport height */
-    overflow-y: auto; /* Enable scrolling for modal content */
-}
-
-/* Close Button */
-.close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    cursor: pointer;
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: var(--dark-text);
-    text-decoration: none;
-}
-
-/* Modal Animations (Optional) */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive adjustments for modal */
-@media (max-width: 768px) {
-    .modal-content {
-        width: 95%;
-        margin: 20px auto; /* Adjust margin for smaller screens */
-    }
 }
