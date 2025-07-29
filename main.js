@@ -37,15 +37,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     const fullText = blogPost.querySelector('.full-text');
 
                     if (shortText && fullText) {
-                        // Current state: fullText is hidden, shortText is visible (initial state or after "Read Less")
+                        // If full text is currently hidden (meaning 'Read More' is visible)
                         if (fullText.style.display === 'none') {
-                            shortText.style.display = 'none'; // Hide short text
-                            fullText.style.display = 'block'; // Show full text
-                            this.textContent = 'Read Less'; // Change button to "Read Less"
-                        } else { // Current state: fullText is visible, shortText is hidden (after "Read More")
-                            shortText.style.display = 'block'; // Show short text
-                            fullText.style.display = 'none'; // Hide full text
-                            this.textContent = 'Read More'; // Change button to "Read More"
+                            shortText.style.display = 'none'; // Hide the short text
+                            fullText.style.display = 'block'; // Show the full text
+                            this.textContent = 'Read Less'; // Change button to 'Read Less'
+                        } else { // If full text is currently visible (meaning 'Read Less' is visible)
+                            shortText.style.display = 'block'; // Show the short text
+                            fullText.style.display = 'none'; // Hide the full text
+                            this.textContent = 'Read More'; // Change button to 'Read More'
                         }
                     }
                 }
