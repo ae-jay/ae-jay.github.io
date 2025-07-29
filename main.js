@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById(containerId).innerHTML = html;
                 // After loading blog.html, initialize the read more functionality
                 if (containerId === 'blog-container') {
-                    initializeReadMore();
+                    initializeModalReadMore(); // Call the new modal initialization function
                 }
             })
             .catch(error => {
@@ -21,35 +21,59 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     };
 
-    // Function to initialize "Read More" functionality
-    const initializeReadMore = () => {
-        const readMoreButtons = document.querySelectorAll('.read-more-btn');
+    // Function to initialize Modal "Read More" functionality
+    const initializeModalReadMore = () => {
+        const modal = document.getElementById('blogPostModal');
+        const closeButton = document.querySelector('.close-button');
+        const modalTitle = document.getElementById('modal-post-title');
+        const modalMeta = document.getElementById('modal-post-meta');
+        const modalBody = document.getElementById('modal-post-body');
 
-        readMoreButtons.forEach(button => {
+        document.querySelectorAll('.read-more-btn').forEach(button => {
             button.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default link behavior
+                event.preventDefault();
 
                 const postId = this.dataset.target;
                 const blogPost = document.querySelector(`.blog-post[data-post-id="${postId}"]`);
 
                 if (blogPost) {
-                    const shortText = blogPost.querySelector('.short-text');
-                    const fullText = blogPost.querySelector('.full-text');
+                    const title = blogPost.querySelector('h3').textContent;
+                    const meta = blogPost.querySelector('.post-meta').innerHTML; // Get HTML for icons/date
+                    const fullContentHidden = blogPost.querySelector('.full-content-hidden');
+                    const shortText = blogPost.querySelector('.short-text'); // Get the short text too
 
-                    if (shortText && fullText) {
-                        // If full text is currently hidden (meaning 'Read More' is visible)
-                        if (fullText.style.display === 'none') {
-                            shortText.style.display = 'none'; // Hide the short text
-                            fullText.style.display = 'block'; // Show the full text
-                            this.textContent = 'Read Less'; // Change button to 'Read Less'
-                        } else { // If full text is currently visible (meaning 'Read Less' is visible)
-                            shortText.style.display = 'block'; // Show the short text
-                            fullText.style.display = 'none'; // Hide the full text
-                            this.textContent = 'Read More'; // Change button to 'Read More'
-                        }
+                    // Populate modal content
+                    modalTitle.textContent = title;
+                    modalMeta.innerHTML = meta;
+
+                    // Concatenate short and full hidden content for the modal body
+                    let fullPostHtml = '';
+                    if (shortText) {
+                        fullPostHtml += shortText.outerHTML; // Include the short text paragraph itself
                     }
+                    if (fullContentHidden) {
+                        fullPostHtml += fullContentHidden.innerHTML; // Get the inner HTML of the hidden full content
+                    }
+                    modalBody.innerHTML = fullPostHtml;
+
+                    modal.style.display = 'flex'; // Use flex to center the modal content
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling on the body
                 }
             });
+        });
+
+        // When the user clicks on <span> (x), close the modal
+        closeButton.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = ''; // Restore body scrolling
+        });
+
+        // When the user clicks anywhere outside of the modal content, close it
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = ''; // Restore body scrolling
+            }
         });
     };
 
@@ -58,6 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
     loadSection('cv-container', 'sections/cv.html');
     loadSection('research-container', 'sections/research.html');
     loadSection('publications-container', 'sections/publications.html');
-    loadSection('blog-container', 'sections/blog.html'); // This will trigger initializeReadMore
+    loadSection('blog-container', 'sections/blog.html');
     loadSection('contact-container', 'sections/contact.html');
 });
