@@ -214,21 +214,54 @@ section {
 }
 
 /* 8. Blog Section */
+/* 8. Blog Section */
 .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
+    display: flex; /* Change from grid to flexbox */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    gap: 2rem; /* Provides spacing between blog posts */
+    padding-bottom: 1.5rem; /* Add some padding for scrollbar on desktop */
+    scroll-snap-type: x mandatory; /* Optional: for snapping behavior */
+    -webkit-overflow-scrolling: touch; /* Optional: for smoother scrolling on iOS */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--primary-green) var(--border-color); /* Firefox */
+}
+
+/* Optional: Style for the scrollbar in Webkit browsers (Chrome, Safari, Edge) */
+.blog-grid::-webkit-scrollbar {
+    height: 8px; /* Height of the horizontal scrollbar */
+}
+
+.blog-grid::-webkit-scrollbar-track {
+    background: var(--secondary-bg); /* Color of the track */
+    border-radius: 10px;
+}
+
+.blog-grid::-webkit-scrollbar-thumb {
+    background-color: var(--primary-green); /* Color of the scroll thumb */
+    border-radius: 10px;
+    border: 2px solid var(--secondary-bg); /* Creates padding around thumb */
 }
 
 .blog-post {
-    background: var(--light-bg);
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 0 0 auto; /* Prevent items from shrinking, allow them to grow based on content */
+    width: 320px; /* Explicit width for each blog post (or min-width) */
+    /* Ensure existing styles like background, border-radius, box-shadow remain */
+    background: var(--light-bg); /* */
+    border-radius: 8px; /* */
+    box-shadow: var(--shadow); /* */
+    overflow: hidden; /* */
+    display: flex; /* */
+    flex-direction: column; /* */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* */
+    scroll-snap-align: start; /* Optional: align items to the start of the scroll container */
 }
+
+/* You can remove or modify the existing blog-grid media query if it interferes,
+   but these flexbox properties will generally override grid behavior.
+   If you had specific media queries for the blog-grid affecting column count,
+   you might need to review them if you want to maintain a grid on larger screens
+   and only scroll on smaller, for example. For a purely scrolling layout,
+   these changes are sufficient. */
 
 .blog-post:hover {
     transform: translateY(-5px);
