@@ -10,9 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(html => {
                 document.getElementById(containerId).innerHTML = html;
-                // After loading blog.html, initialize the read more functionality
+                // After loading blog.html, initialize the read more and carousel functionality
                 if (containerId === 'blog-container') {
-                    initializeModalReadMore(); // Call the new modal initialization function
+                    initializeModalReadMore(); // Existing modal logic
+                    initializeBlogCarousel(); // NEW: Carousel logic
                 }
             })
             .catch(error => {
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     };
 
-    // Function to initialize Modal "Read More" functionality
+    // Existing Function to initialize Modal "Read More" functionality (no changes needed here)
     const initializeModalReadMore = () => {
         const modal = document.getElementById('blogPostModal');
         const closeButton = document.querySelector('.close-button');
@@ -38,43 +39,86 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (blogPost) {
                     const title = blogPost.querySelector('h3').textContent;
-                    const meta = blogPost.querySelector('.post-meta').innerHTML; // Get HTML for icons/date
+                    const meta = blogPost.querySelector('.post-meta').innerHTML;
                     const fullContentHidden = blogPost.querySelector('.full-content-hidden');
-                    const shortText = blogPost.querySelector('.short-text'); // Get the short text too
+                    const shortText = blogPost.querySelector('.short-text');
 
-                    // Populate modal content
                     modalTitle.textContent = title;
                     modalMeta.innerHTML = meta;
 
-                    // Concatenate short and full hidden content for the modal body
                     let fullPostHtml = '';
                     if (shortText) {
-                        fullPostHtml += shortText.outerHTML; // Include the short text paragraph itself
+                        fullPostHtml += shortText.outerHTML;
                     }
                     if (fullContentHidden) {
-                        fullPostHtml += fullContentHidden.innerHTML; // Get the inner HTML of the hidden full content
+                        fullPostHtml += fullContentHidden.innerHTML;
                     }
                     modalBody.innerHTML = fullPostHtml;
 
-                    modal.style.display = 'flex'; // Use flex to center the modal content
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling on the body
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
                 }
             });
         });
 
-        // When the user clicks on <span> (x), close the modal
         closeButton.addEventListener('click', function() {
             modal.style.display = 'none';
-            document.body.style.overflow = ''; // Restore body scrolling
+            document.body.style.overflow = '';
         });
 
-        // When the user clicks anywhere outside of the modal content, close it
         window.addEventListener('click', function(event) {
             if (event.target == modal) {
                 modal.style.display = 'none';
-                document.body.style.overflow = ''; // Restore body scrolling
+                document.body.style.overflow = '';
             }
         });
+    };
+
+    // NEW Function for Blog Carousel Arrows
+    const initializeBlogCarousel = () => {
+        const blogGrid = document.getElementById('blogGrid');
+        const leftArrow = document.getElementById('leftArrow');
+        const rightArrow = document.getElementById('rightArrow');
+
+        if (!blogGrid || !leftArrow || !rightArrow) {
+            console.warn('Blog carousel elements not found. Skipping carousel initialization.');
+            return;
+        }
+
+        const scrollAmount = 350; // Adjust this value based on your blog-post width + gap
+
+        // Function to check and update arrow visibility
+        const updateArrowVisibility = () => {
+            // Check if at the very beginning of the scroll
+            leftArrow.disabled = blogGrid.scrollLeft <= 0;
+            
+            // Check if at the very end of the scroll
+            // Use Math.ceil to account for fractional pixel scrolling and prevent premature disabling
+            rightArrow.disabled = Math.ceil(blogGrid.scrollLeft) + blogGrid.clientWidth >= blogGrid.scrollWidth;
+        };
+
+        // Scroll Left
+        leftArrow.addEventListener('click', () => {
+            blogGrid.scrollBy({
+                left: -scrollAmount,
+                behavior: 'smooth'
+            });
+        });
+
+        // Scroll Right
+        rightArrow.addEventListener('click', () => {
+            blogGrid.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        });
+
+        // Update arrow visibility when the grid is scrolled
+        blogGrid.addEventListener('scroll', updateArrowVisibility);
+
+        // Initial check when the page loads (after content is loaded)
+        // Use a slight delay to ensure all content is rendered and scrollWidth is accurate
+        setTimeout(updateArrowVisibility, 100); 
     };
 
     // Load all the sections into their respective containers
@@ -82,6 +126,6 @@ document.addEventListener('DOMContentLoaded', function() {
     loadSection('cv-container', 'sections/cv.html');
     loadSection('research-container', 'sections/research.html');
     loadSection('publications-container', 'sections/publications.html');
-    loadSection('blog-container', 'sections/blog.html');
+    loadSection('blog-container', 'sections/blog.html'); // This will trigger initialization
     loadSection('contact-container', 'sections/contact.html');
 });

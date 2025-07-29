@@ -216,31 +216,30 @@ section {
 }
 
 /* 8. Blog Section */
+/* New wrapper for carousel functionality */
+.blog-carousel-wrapper {
+    position: relative; /* For absolute positioning of arrows */
+    margin: 0 auto; /* Center the wrapper */
+    max-width: 1100px; /* Match container width for alignment */
+    padding: 0 50px; /* Add padding for arrows not to overlap content initially */
+}
+
 .blog-grid {
-    display: flex; /* Change from grid to flexbox for horizontal scrolling */
-    overflow-x: auto; /* Enable horizontal scrolling */
-    gap: 2rem; /* Provides spacing between blog posts */
-    padding-bottom: 1.5rem; /* Add some padding for scrollbar on desktop */
+    display: flex; /* Flexbox for horizontal layout */
+    overflow-x: scroll; /* Keep scroll behavior for JS control */
+    gap: 2rem; /* Spacing between blog posts */
+    padding-bottom: 0; /* Remove padding if scrollbar is hidden */
     scroll-snap-type: x mandatory; /* Optional: for snapping behavior */
     -webkit-overflow-scrolling: touch; /* Optional: for smoother scrolling on iOS */
-    scrollbar-width: thin; /* Firefox */
-    scrollbar-color: var(--primary-green) var(--border-color); /* Firefox */
+    
+    /* Hide scrollbar for various browsers */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
 }
 
-/* Optional: Style for the scrollbar in Webkit browsers (Chrome, Safari, Edge) */
+/* Hide scrollbar for Webkit browsers (Chrome, Safari, Edge) */
 .blog-grid::-webkit-scrollbar {
-    height: 8px; /* Height of the horizontal scrollbar */
-}
-
-.blog-grid::-webkit-scrollbar-track {
-    background: var(--secondary-bg); /* Color of the track */
-    border-radius: 10px;
-}
-
-.blog-grid::-webkit-scrollbar-thumb {
-    background-color: var(--primary-green); /* Color of the scroll thumb */
-    border-radius: 10px;
-    border: 2px solid var(--secondary-bg); /* Creates padding around thumb */
+    display: none; /* Hide the scrollbar */
 }
 
 .blog-post {
@@ -253,7 +252,7 @@ section {
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    scroll-snap-align: start; /* Optional: align items to the start of the scroll container */
+    scroll-snap-align: start; /* Align items to the start of the scroll container */
 }
 
 .blog-post:hover {
@@ -303,6 +302,46 @@ section {
     background-color: var(--primary-green-darker);
     color: var(--light-bg);
 }
+
+/* Carousel Arrow Styles */
+.carousel-arrow {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for perfect vertical centering */
+    background-color: rgba(74, 124, 89, 0.8); /* Primary green with some transparency */
+    color: var(--light-bg);
+    border: none;
+    padding: 1rem 0.8rem;
+    cursor: pointer;
+    z-index: 10; /* Ensure arrows are above blog posts */
+    font-size: 1.5rem;
+    border-radius: 50%; /* Make them circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+    box-shadow: var(--shadow); /* Add a subtle shadow */
+}
+
+.carousel-arrow:hover {
+    background-color: var(--primary-green-darker);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-arrow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: rgba(74, 124, 89, 0.4);
+}
+
+.left-arrow {
+    left: 0; /* Position left arrow to the left edge of the wrapper */
+}
+
+.right-arrow {
+    right: 0; /* Position right arrow to the right edge of the wrapper */
+}
+
 
 /* 9. Contact Section */
 #contact .container {
@@ -374,9 +413,13 @@ footer p {
         padding: 4rem 0;
     }
 
-    /* For horizontal scrolling blog, you might not need to change blog-grid display here
-       unless you want it to go back to grid on very small screens, which is unlikely.
-       The current flexbox setup handles responsiveness well. */
+    .blog-carousel-wrapper {
+        padding: 0 30px; /* Reduce padding for smaller screens */
+    }
+    .carousel-arrow {
+        font-size: 1.2rem;
+        padding: 0.7rem 0.6rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -388,7 +431,6 @@ footer p {
         font-size: 0.9rem;
         padding: 0.5rem;
     }
-    /* The blog-grid flexbox approach naturally handles smaller screens by scrolling */
 }
 
 /* 12. Modal Styles */
