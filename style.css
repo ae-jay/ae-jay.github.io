@@ -173,19 +173,42 @@ section {
 }
 
 /* 6. Research Section */
+/* New wrapper for research carousel */
+.research-carousel-wrapper {
+    position: relative;
+    margin: 0 auto;
+    max-width: 1100px; /* Match container width */
+    padding: 0 50px; /* Space for arrows */
+}
+
 .research-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    display: flex; /* Change from grid to flexbox */
+    overflow-x: scroll; /* Enable horizontal scrolling for JS control */
+    gap: 2rem; /* Provides spacing between research cards */
+    padding-bottom: 0; /* Remove padding if scrollbar is hidden */
+    scroll-snap-type: x mandatory; /* Optional: for snapping behavior */
+    -webkit-overflow-scrolling: touch; /* Optional: for smoother scrolling on iOS */
+
+    /* Hide scrollbar for various browsers */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+/* Hide scrollbar for Webkit browsers (Chrome, Safari, Edge) */
+.research-grid::-webkit-scrollbar {
+    display: none; /* Hide the scrollbar */
 }
 
 .research-card {
+    flex: 0 0 auto; /* Prevent cards from shrinking/growing, maintain width */
+    width: 300px; /* Explicit width for each card, matching original minmax */
     background-color: var(--light-bg);
     padding: 2rem;
     border-radius: 8px;
     border-left: 5px solid var(--primary-green);
     box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    scroll-snap-align: start; /* Align items to the start of the scroll container */
 }
 
 .research-card:hover {
@@ -303,7 +326,7 @@ section {
     color: var(--light-bg);
 }
 
-/* Carousel Arrow Styles */
+/* Carousel Arrow Styles - Applied universally to all carousel arrows */
 .carousel-arrow {
     position: absolute;
     top: 50%; /* Center vertically */
@@ -313,7 +336,7 @@ section {
     border: none;
     padding: 1rem 0.8rem;
     cursor: pointer;
-    z-index: 10; /* Ensure arrows are above blog posts */
+    z-index: 10; /* Ensure arrows are above content */
     font-size: 1.5rem;
     border-radius: 50%; /* Make them circular */
     display: flex;
@@ -413,8 +436,9 @@ footer p {
         padding: 4rem 0;
     }
 
-    .blog-carousel-wrapper {
-        padding: 0 30px; /* Reduce padding for smaller screens */
+    .blog-carousel-wrapper,
+    .research-carousel-wrapper { /* Apply to both wrappers */
+        padding: 0 30px; /* Reduce padding for arrows on smaller screens */
     }
     .carousel-arrow {
         font-size: 1.2rem;
@@ -431,6 +455,7 @@ footer p {
         font-size: 0.9rem;
         padding: 0.5rem;
     }
+    /* The flexbox approach for carousels naturally handles smaller screens by scrolling */
 }
 
 /* 12. Modal Styles */
