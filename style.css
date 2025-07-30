@@ -139,8 +139,8 @@ section {
     padding: 5rem 0;
 }
 
-/* Add alternating background colors for visual rhythm */
-#cv, #publications, #contact {
+/* CORRECTED: This rule now properly maintains the alternating pattern */
+#cv, #publications, #resources {
     background-color: var(--secondary-bg);
 }
 
@@ -570,11 +570,6 @@ footer p {
 
 /* --- Appended for new Resources Section --- */
 
-#resources {
-    /* The new section will have the default white background, preserving the original styling of all other sections */
-    background-color: var(--light-bg);
-}
-
 .resource-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -589,7 +584,6 @@ footer p {
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid var(--border-color); /* Added a subtle border for cards on white bg */
 }
 
 .resource-card:hover {

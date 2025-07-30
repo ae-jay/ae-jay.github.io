@@ -127,6 +127,6 @@ document.addEventListener('DOMContentLoaded', function() {
     loadSection('research-container', 'sections/research.html');
     loadSection('publications-container', 'sections/publications.html');
     loadSection('blog-container', 'sections/blog.html'); // This will trigger initialization
-    loadSection('resources-container', 'sections/resources.html'); // ADDED
+    loadSection('resources-container', 'sections/resources.html');
     loadSection('contact-container', 'sections/contact.html');
 });
