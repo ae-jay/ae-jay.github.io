@@ -637,3 +637,11 @@ footer p {
         grid-template-columns: 1fr;
     }
 }
+
+/* --- Appended for Hit Counter --- */
+
+.hit-counter {
+    margin-top: 1rem;
+    /* This ensures the counter image itself is centered if it's inside a link */
+    text-align: center;
+}
