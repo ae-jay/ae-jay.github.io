@@ -7,11 +7,12 @@
 6. Research Section
 7. Publications Section
 8. Blog Section
-9. Contact Section
-10. Footer
-11. Responsive Design (Media Queries)
-12. Modal Styles
-13. CV Section Styles
+9. Resources Section Styles /* ADDED */
+10. Contact Section
+11. Footer
+12. Responsive Design (Media Queries)
+13. Modal Styles
+14. CV Section Styles
 */
 
 /* 1. Root Variables & Global Resets */
@@ -139,8 +140,8 @@ section {
     padding: 5rem 0;
 }
 
-/* Add alternating background colors for visual rhythm */
-#cv, #publications, #contact {
+/* UPDATED: Add #resources and remove #contact to maintain alternating pattern */
+#cv, #publications, #resources {
     background-color: var(--secondary-bg);
 }
 
@@ -366,7 +367,74 @@ section {
 }
 
 
-/* 9. Contact Section */
+/* 9. Resources Section Styles */
+.resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.resource-card {
+    background: var(--light-bg);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.resource-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.resource-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.resource-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.resource-link {
+    display: inline-block;
+    background-color: var(--primary-green);
+    color: var(--light-bg);
+    padding: 0.7rem 1.4rem;
+    border-radius: 5px;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    align-self: flex-start;
+    margin-top: auto;
+    transition: background-color 0.3s ease;
+}
+
+.resource-link:hover {
+    background-color: var(--primary-green-darker);
+    color: var(--light-bg);
+}
+
+.resource-link i {
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.resource-link.disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+/* 10. Contact Section */
+#contact {
+    background-color: var(--light-bg); /* This section now has the light background */
+}
+
 #contact .container {
     text-align: center;
     max-width: 700px;
@@ -388,7 +456,7 @@ section {
     transform: scale(1.1);
 }
 
-/* 10. Footer */
+/* 11. Footer */
 footer {
     background-color: var(--dark-text);
     color: #ccc;
@@ -401,7 +469,7 @@ footer p {
     font-size: 0.9rem;
 }
 
-/* 11. Responsive Design (Media Queries) */
+/* 12. Responsive Design (Media Queries) */
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
@@ -455,10 +523,12 @@ footer p {
         font-size: 0.9rem;
         padding: 0.5rem;
     }
-    /* The flexbox approach for carousels naturally handles smaller screens by scrolling */
+    .resource-grid {
+        grid-template-columns: 1fr; /* Stack cards on very small screens */
+    }
 }
 
-/* 12. Modal Styles */
+/* 13. Modal Styles */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -517,7 +587,7 @@ footer p {
     }
 }
 
-/* 13. Styles for new CV Section */
+/* 14. CV Section Styles */
 .cv-download-btn {
     display: inline-block;
     background-color: var(--primary-green);
